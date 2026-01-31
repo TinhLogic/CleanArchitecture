@@ -5,8 +5,8 @@ namespace CleanArchitecture.EntityFrameworkCore.Abstractions;
 /// </summary>
 public interface IUnitOfWork : IDisposable
 {
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-    Task BeginTransactionAsync(CancellationToken cancellationToken = default);
-    Task CommitTransactionAsync(CancellationToken cancellationToken = default);
-    Task RollbackTransactionAsync(CancellationToken cancellationToken = default);
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    public Task BeginTransactionAsync(CancellationToken cancellationToken = default);
+    public Task CommitTransactionAsync(CancellationToken cancellationToken = default);
+    public Task RollbackTransactionAsync(CancellationToken cancellationToken = default);
 }

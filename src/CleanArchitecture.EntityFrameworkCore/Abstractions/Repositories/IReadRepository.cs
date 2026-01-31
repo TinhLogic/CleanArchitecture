@@ -8,8 +8,8 @@ namespace CleanArchitecture.EntityFrameworkCore.Abstractions.Repositories;
 public interface IReadRepository<T>
     where T : BaseEntity
 {
-    Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
-    Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default);
-    Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default);
-    IQueryable<T> GetQueryable();
+    public Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default);
+    public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default);
+    public IQueryable<T> GetQueryable();
 }

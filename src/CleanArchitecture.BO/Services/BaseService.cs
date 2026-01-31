@@ -28,13 +28,13 @@ public abstract class BaseService<TEntity, TDto> : IBaseService<TEntity, TDto>
         CancellationToken cancellationToken = default
     )
     {
-        var entity = await _repository.GetByIdAsync(id, cancellationToken);
+        TEntity? entity = await _repository.GetByIdAsync(id, cancellationToken);
         if (entity == null)
         {
             return Result<TDto>.Failure(message: $"Entity with id {id} not found", code: 404);
         }
 
-        var dto = MapToDto(entity);
+        TDto dto = MapToDto(entity);
         return Result<TDto>.Success(dto);
     }
 
@@ -42,8 +42,8 @@ public abstract class BaseService<TEntity, TDto> : IBaseService<TEntity, TDto>
         CancellationToken cancellationToken = default
     )
     {
-        var entities = await _repository.GetAllAsync(cancellationToken);
-        var dtos = entities.Select(MapToDto);
+        IEnumerable<TEntity> entities = await _repository.GetAllAsync(cancellationToken);
+        IEnumerable<TDto> dtos = entities.Select(MapToDto);
         return Result<IEnumerable<TDto>>.Success(dtos);
     }
 
@@ -54,11 +54,11 @@ public abstract class BaseService<TEntity, TDto> : IBaseService<TEntity, TDto>
     {
         ArgumentNullException.ThrowIfNull(dto);
 
-        var entity = MapToEntity(dto);
+        TEntity entity = MapToEntity(dto);
         await _repository.InsertAsync(entity, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var resultDto = MapToDto(entity);
+        TDto resultDto = MapToDto(entity);
         return Result<TDto>.Success(resultDto, code: 201);
     }
 
@@ -70,7 +70,7 @@ public abstract class BaseService<TEntity, TDto> : IBaseService<TEntity, TDto>
     {
         ArgumentNullException.ThrowIfNull(dto);
 
-        var existingEntity = await _repository.GetByIdAsync(id, cancellationToken);
+        TEntity? existingEntity = await _repository.GetByIdAsync(id, cancellationToken);
         if (existingEntity == null)
         {
             return Result<TDto>.Failure($"Entity with id {id} not found", code: 404);
@@ -80,7 +80,7 @@ public abstract class BaseService<TEntity, TDto> : IBaseService<TEntity, TDto>
         await _repository.EditAsync(existingEntity, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var resultDto = MapToDto(existingEntity);
+        TDto resultDto = MapToDto(existingEntity);
         return Result<TDto>.Success(resultDto);
     }
 
@@ -89,13 +89,13 @@ public abstract class BaseService<TEntity, TDto> : IBaseService<TEntity, TDto>
         CancellationToken cancellationToken = default
     )
     {
-        var entity = await _repository.GetByIdAsync(id, cancellationToken);
+        TEntity? entity = await _repository.GetByIdAsync(id, cancellationToken);
         if (entity == null)
         {
             return Result<TDto>.Failure($"Entity with id {id} not found", code: 404);
         }
 
-        var dto = MapToDto(entity);
+        TDto dto = MapToDto(entity);
         await _repository.RemoveAsync(entity, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

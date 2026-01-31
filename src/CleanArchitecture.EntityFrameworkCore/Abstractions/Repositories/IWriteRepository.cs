@@ -8,10 +8,10 @@ namespace CleanArchitecture.EntityFrameworkCore.Abstractions.Repositories;
 public interface IWriteRepository<T>
     where T : BaseEntity
 {
-    Task<T> InsertAsync(T entity, CancellationToken cancellationToken = default);
-    Task InsertManyAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
-    Task EditAsync(T entity, CancellationToken cancellationToken = default);
-    Task EditManyAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
-    Task RemoveAsync(T entity, CancellationToken cancellationToken = default);
-    Task RemoveManyAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+    public Task<T> InsertAsync(T entity, CancellationToken cancellationToken = default);
+    public Task InsertManyAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+    public Task EditAsync(T entity, CancellationToken cancellationToken = default);
+    public Task EditManyAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+    public Task RemoveAsync(T entity, CancellationToken cancellationToken = default);
+    public Task RemoveManyAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 }

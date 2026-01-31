@@ -21,7 +21,7 @@ public static class DependencyInjection
         where TDbContext : DbContext
     {
         // Đọc danh sách databases từ config
-        var dbConfig = configuration.GetSection("Databases").Get<DatabaseConfiguration>();
+        DatabaseConfiguration? dbConfig = configuration.GetSection("Databases").Get<DatabaseConfiguration>();
         if (dbConfig == null)
         {
             throw new InvalidOperationException("No database configuration found in appsettings");

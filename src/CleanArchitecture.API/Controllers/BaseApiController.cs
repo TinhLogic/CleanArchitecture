@@ -1,3 +1,4 @@
+using System.Reflection;
 using CleanArchitecture.BO.Interfaces;
 using CleanArchitecture.DTOs;
 using CleanArchitecture.Entities;
@@ -62,7 +63,7 @@ public class BaseApiController<TEntity, TDto> : ControllerBase
         }
 
         // For IEnumerable results
-        var codeProperty = result.GetType().GetProperty("Code");
+        PropertyInfo? codeProperty = result.GetType().GetProperty("Code");
         if (codeProperty != null && codeProperty.GetValue(result) is int code)
         {
             return code switch
@@ -84,11 +85,11 @@ public class BaseApiController<TEntity, TDto> : ControllerBase
     /// Get all entities
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<Result<IEnumerable<TDto>>>> GetAll()
+    public async Task<ActionResult<Result<IEnumerable<TDto>>>> GetAllAsync()
     {
         try
         {
-            var result = await _service.GetAllAsync();
+            Result<IEnumerable<TDto>> result = await _service.GetAllAsync();
             return ToActionResult(result);
         }
         catch (Exception ex)
@@ -102,11 +103,11 @@ public class BaseApiController<TEntity, TDto> : ControllerBase
     /// Get entity by ID
     /// </summary>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Result<TDto>>> GetById(Guid id)
+    public async Task<ActionResult<Result<TDto>>> GetByIdAsync(Guid id)
     {
         try
         {
-            var result = await _service.GetByIdAsync(id);
+            Result<TDto> result = await _service.GetByIdAsync(id);
             return ToActionResult(result);
         }
         catch (Exception ex)
@@ -120,13 +121,16 @@ public class BaseApiController<TEntity, TDto> : ControllerBase
     /// Create new entity
     /// </summary>
     [HttpPost]
-    public async Task<ActionResult<Result<TDto>>> Create([FromBody] TDto dto)
+    public async Task<ActionResult<Result<TDto>>> CreateAsync([FromBody] TDto dto)
     {
         try
         {
-            var result = await _service.CreateAsync(dto);
+            Result<TDto> result = await _service.CreateAsync(dto);
             if (result.Code == 201)
-                return CreatedAtAction(nameof(GetById), new { id = result.Data?.Id }, result);
+            {
+                return CreatedAtAction(nameof(GetByIdAsync), new { id = result.Data?.Id }, result);
+            }
+
             return ToActionResult(result);
         }
         catch (Exception ex)
@@ -140,14 +144,16 @@ public class BaseApiController<TEntity, TDto> : ControllerBase
     /// Update entity
     /// </summary>
     [HttpPut("{id}")]
-    public async Task<ActionResult<Result<TDto>>> Update(Guid id, [FromBody] TDto dto)
+    public async Task<ActionResult<Result<TDto>>> UpdateAsync(Guid id, [FromBody] TDto dto)
     {
         try
         {
             if (id != dto.Id)
+            {
                 return BadRequest(Result<TDto>.Failure("ID mismatch"));
+            }
 
-            var result = await _service.UpdateAsync(id, dto);
+            Result<TDto> result = await _service.UpdateAsync(id, dto);
             return ToActionResult(result);
         }
         catch (Exception ex)
@@ -161,11 +167,11 @@ public class BaseApiController<TEntity, TDto> : ControllerBase
     /// Delete entity
     /// </summary>
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Result<TDto>>> Delete(Guid id)
+    public async Task<ActionResult<Result<TDto>>> DeleteAsync(Guid id)
     {
         try
         {
-            var result = await _service.DeleteAsync(id);
+            Result<TDto> result = await _service.DeleteAsync(id);
             return ToActionResult(result);
         }
         catch (Exception ex)
@@ -179,14 +185,14 @@ public class BaseApiController<TEntity, TDto> : ControllerBase
     /// Filter entities with DevExtreme DataSource options
     /// </summary>
     [HttpPost("filter")]
-    public virtual async Task<ActionResult<LoadResult>> Filter(
+    public virtual async Task<ActionResult<LoadResult>> FilterAsync(
         [FromBody] DataSourceLoadOptionsBase loadOptions
     )
     {
         try
         {
-            var queryable = _service.GetQueryable();
-            var result = await DataSourceLoader.LoadAsync(queryable, loadOptions);
+            IQueryable<TEntity> queryable = _service.GetQueryable();
+            LoadResult result = await DataSourceLoader.LoadAsync(queryable, loadOptions);
             return Ok(result);
         }
         catch (Exception ex)

@@ -8,12 +8,12 @@ namespace CleanArchitecture.EntityFrameworkCore.Abstractions.Repositories;
 public interface IBulkRepository<T>
     where T : BaseEntity
 {
-    Task<int> BulkDeleteAsync(
+    public Task<int> BulkDeleteAsync(
         System.Linq.Expressions.Expression<Func<T, bool>> predicate,
         CancellationToken cancellationToken = default
     );
 
-    Task<int> BulkUpdateAsync<TProperty>(
+    public Task<int> BulkUpdateAsync<TProperty>(
         System.Linq.Expressions.Expression<Func<T, bool>> predicate,
         System.Linq.Expressions.Expression<Func<T, TProperty>> propertyExpression,
         TProperty newValue,

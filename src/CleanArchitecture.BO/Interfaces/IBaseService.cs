@@ -11,19 +11,19 @@ public interface IBaseService<TEntity, TDto> : IService
     where TEntity : BaseEntity
     where TDto : BaseDto
 {
-    Task<Result<TDto>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    public Task<Result<TDto>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
-    Task<Result<IEnumerable<TDto>>> GetAllAsync(CancellationToken cancellationToken = default);
+    public Task<Result<IEnumerable<TDto>>> GetAllAsync(CancellationToken cancellationToken = default);
 
-    Task<Result<TDto>> CreateAsync(TDto dto, CancellationToken cancellationToken = default);
+    public Task<Result<TDto>> CreateAsync(TDto dto, CancellationToken cancellationToken = default);
 
-    Task<Result<TDto>> UpdateAsync(
+    public Task<Result<TDto>> UpdateAsync(
         Guid id,
         TDto dto,
         CancellationToken cancellationToken = default
     );
 
-    Task<Result<TDto>> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+    public Task<Result<TDto>> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 
-    IQueryable<TEntity> GetQueryable();
+    public IQueryable<TEntity> GetQueryable();
 }

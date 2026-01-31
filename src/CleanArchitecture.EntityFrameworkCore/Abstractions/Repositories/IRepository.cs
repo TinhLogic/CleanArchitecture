@@ -8,4 +8,5 @@ namespace CleanArchitecture.EntityFrameworkCore.Abstractions.Repositories;
 /// để tuân thủ Interface Segregation Principle.
 /// </summary>
 public interface IRepository<T> : IReadRepository<T>, IWriteRepository<T>, IBulkRepository<T>
-    where T : BaseEntity { }
+    where T : BaseEntity
+{ }

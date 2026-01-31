@@ -1,5 +1,6 @@
 using CleanArchitecture.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CleanArchitecture.EntityFrameworkCore.Implementation.DbContexts;
 
@@ -14,7 +15,7 @@ public abstract class BaseDbContext : DbContext
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         // Auto set audit fields cho các entity
-        foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+        foreach (EntityEntry<BaseEntity> entry in ChangeTracker.Entries<BaseEntity>())
         {
             switch (entry.State)
             {

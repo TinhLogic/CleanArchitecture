@@ -1,0 +1,320 @@
+# EditorConfig là gì?
+# EditorConfig giúp maintain coding style nhất quán giữa các developers và các IDE khác nhau
+# File này sẽ được tất cả các IDE hiện đại tự động nhận diện (Visual Studio, VS Code, Rider...)
+# Tài liệu: https://editorconfig.org/
+
+# ==============================================
+# ROOT CONFIG - Đây là file config gốc
+# ==============================================
+# true = Không tìm kiếm file .editorconfig khác ở thư mục cha
+root = true
+
+# ==============================================
+# GLOBAL SETTINGS - Áp dụng cho TẤT CẢ các file
+# ==============================================
+[*]
+# Encoding của file - UTF-8 là chuẩn quốc tế, support đầy đủ Unicode
+charset = utf-8
+
+# Loại xuống dòng: crlf (Windows \r\n) | lf (Unix/Mac \n) | cr (Old Mac \r)
+# Windows sử dụng CRLF, nhưng Git có thể tự convert nên không quan trọng lắm
+end_of_line = crlf
+
+# Tự động thêm dòng trống ở cuối file
+# Best practice: mọi file text nên kết thúc bằng newline
+insert_final_newline = true
+
+# Tự động xóa khoảng trắng thừa ở cuối dòng
+# Khoảng trắng thừa gây khó khăn trong code review và Git diff
+trim_trailing_whitespace = true
+
+# ==============================================
+# C# FILES - Áp dụng cho tất cả file .cs
+# ==============================================
+[*.cs]
+# --- INDENTATION (Thụt lề) ---
+# Sử dụng spaces thay vì tabs để đảm bảo hiển thị nhất quán trên mọi IDE
+indent_style = space
+# Mỗi level indent = 4 spaces (chuẩn của C#)
+indent_size = 4
+# Tab key sẽ insert 4 spaces
+tab_width = 4
+
+# --- NAMING CONVENTIONS (Quy tắc đặt tên) ---
+# Tài liệu: https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions
+
+# Public members (methods, properties, fields) phải dùng PascalCase
+dotnet_naming_rule.public_members_must_be_capitalized.severity = warning
+dotnet_naming_rule.public_members_must_be_capitalized.symbols = public_symbols
+dotnet_naming_rule.public_members_must_be_capitalized.style = first_word_upper_case_style
+
+dotnet_naming_symbols.public_symbols.applicable_kinds = property,method,field,event,delegate
+dotnet_naming_symbols.public_symbols.applicable_accessibilities = public,internal,protected,protected_internal
+
+dotnet_naming_style.first_word_upper_case_style.capitalization = pascal_case
+
+# Private và protected readonly fields phải bắt đầu bằng _ và dùng camelCase (ví dụ: _userName, _repository)
+# Rule này áp dụng cho private fields và protected readonly fields (thường dùng cho dependency injection)
+dotnet_naming_rule.private_protected_fields_with_underscore.severity = warning
+dotnet_naming_rule.private_protected_fields_with_underscore.symbols = private_protected_fields
+dotnet_naming_rule.private_protected_fields_with_underscore.style = prefix_underscore
+
+dotnet_naming_symbols.private_protected_fields.applicable_kinds = field
+dotnet_naming_symbols.private_protected_fields.applicable_accessibilities = private,protected
+dotnet_naming_symbols.private_protected_fields.required_modifiers = readonly
+
+dotnet_naming_style.prefix_underscore.capitalization = camel_case
+dotnet_naming_style.prefix_underscore.required_prefix = _
+
+# Private fields không readonly cũng phải dùng _ prefix
+dotnet_naming_rule.private_fields_with_underscore.severity = warning
+dotnet_naming_rule.private_fields_with_underscore.symbols = private_fields_non_readonly
+dotnet_naming_rule.private_fields_with_underscore.style = prefix_underscore
+
+dotnet_naming_symbols.private_fields_non_readonly.applicable_kinds = field
+dotnet_naming_symbols.private_fields_non_readonly.applicable_accessibilities = private
+
+# Async methods phải có suffix Async (ví dụ: GetDataAsync)
+dotnet_naming_rule.async_methods_end_in_async.severity = warning
+dotnet_naming_rule.async_methods_end_in_async.symbols = async_methods
+dotnet_naming_rule.async_methods_end_in_async.style = end_in_async
+
+dotnet_naming_symbols.async_methods.applicable_kinds = method
+dotnet_naming_symbols.async_methods.required_modifiers = async
+
+dotnet_naming_style.end_in_async.capitalization = pascal_case
+dotnet_naming_style.end_in_async.required_suffix = Async
+
+# Interfaces phải bắt đầu bằng I (ví dụ: IRepository, IService)
+dotnet_naming_rule.interface_should_be_begins_with_i.severity = warning
+dotnet_naming_rule.interface_should_be_begins_with_i.symbols = interface
+dotnet_naming_rule.interface_should_be_begins_with_i.style = begins_with_i
+
+dotnet_naming_symbols.interface.applicable_kinds = interface
+dotnet_naming_symbols.interface.applicable_accessibilities = *
+
+dotnet_naming_style.begins_with_i.capitalization = pascal_case
+dotnet_naming_style.begins_with_i.required_prefix = I
+
+# --- CODE STYLE (Phong cách code) ---
+
+# USING DIRECTIVES
+# Sắp xếp using: System namespaces trước, sau đó alphabetically
+dotnet_sort_system_directives_first = true
+# Đặt using directives ở ngoài namespace (chuẩn mới của C#)
+csharp_using_directive_placement = outside_namespace:warning
+
+# 'this.' QUALIFIER
+# Không cần dùng this. khi không cần thiết (code gọn hơn)
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_property = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_event = false:warning
+
+# TYPE KEYWORDS (int vs Int32, string vs String)
+# Ưu tiên dùng type keywords (int, string, bool) thay vì BCL types (Int32, String, Boolean)
+dotnet_style_predefined_type_for_locals_parameters_members = true:warning
+dotnet_style_predefined_type_for_member_access = true:warning
+
+# VAR KEYWORD
+# Chỉ dùng var khi type đã rõ ràng (ví dụ: var user = new User())
+csharp_style_var_for_built_in_types = false:warning
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = false:warning
+
+# EXPRESSION-BODIED MEMBERS
+# Cho phép dùng => cho methods/properties 1 dòng (code ngắn gọn hơn)
+csharp_style_expression_bodied_methods = when_on_single_line:suggestion
+csharp_style_expression_bodied_constructors = false:warning
+csharp_style_expression_bodied_operators = when_on_single_line:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+csharp_style_expression_bodied_indexers = true:suggestion
+csharp_style_expression_bodied_accessors = true:suggestion
+csharp_style_expression_bodied_lambdas = true:suggestion
+csharp_style_expression_bodied_local_functions = when_on_single_line:suggestion
+
+# PATTERN MATCHING
+# Khuyến khích dùng pattern matching (tính năng mới của C#)
+csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
+csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
+
+# INLINED VARIABLE DECLARATIONS
+# Inline variable trong out parameter: Method(out var result) thay vì khai báo trước
+csharp_style_inlined_variable_declaration = true:suggestion
+
+# NULL-CHECKING PREFERENCES
+# Dùng throw expression: ?? throw new Exception()
+csharp_style_throw_expression = true:suggestion
+# Dùng null propagation: user?.Name thay vì if (user != null) user.Name
+csharp_style_conditional_delegate_call = true:suggestion
+
+# MODIFIER PREFERENCES
+# Luôn khai báo access modifiers (public, private, protected) rõ ràng
+dotnet_style_require_accessibility_modifiers = always:warning
+# Sắp xếp modifiers theo thứ tự chuẩn: public static readonly ...
+csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async:warning
+# Khai báo readonly cho fields không thay đổi sau constructor
+dotnet_style_readonly_field = true:warning
+
+# PARENTHESES PREFERENCES
+# Dùng ngoặc đơn để code rõ ràng hơn trong expressions phức tạp
+dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:suggestion
+dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:suggestion
+dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:suggestion
+dotnet_style_parentheses_in_other_operators = never_if_unnecessary:suggestion
+
+# EXPRESSION LEVEL PREFERENCES
+# Dùng object initializers: new User { Name = "John" }
+dotnet_style_object_initializer = true:suggestion
+# Dùng collection initializers: new List<int> { 1, 2, 3 }
+dotnet_style_collection_initializer = true:suggestion
+# Dùng tuple names: (name: "John", age: 25).name thay vì .Item1
+dotnet_style_explicit_tuple_names = true:warning
+# Dùng coalesce expression: ?? thay vì ternary null check
+dotnet_style_coalesce_expression = true:suggestion
+# Dùng null propagation: ?.
+dotnet_style_null_propagation = true:suggestion
+
+# --- FORMATTING RULES (Quy tắc format) ---
+
+# NEW LINE OPTIONS (Xuống dòng)
+# Mở { trên dòng mới (Allman style - chuẩn C#)
+csharp_new_line_before_open_brace = all
+# Else, catch, finally trên dòng mới
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+# Mở { của object initializer trên dòng mới
+csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_members_in_anonymous_types = true
+# Xuống dòng cho query expression
+csharp_new_line_between_query_expression_clauses = true
+
+# INDENTATION OPTIONS (Thụt lề chi tiết)
+# Indent case trong switch
+csharp_indent_case_contents = true
+# Không indent case labels
+csharp_indent_switch_labels = true
+# Indent labels
+csharp_indent_labels = no_change
+# Không indent block contents
+csharp_indent_block_contents = true
+# Không indent braces
+csharp_indent_braces = false
+# Indent case contents khi có braces
+csharp_indent_case_contents_when_block = false
+
+# SPACING OPTIONS (Khoảng cách)
+# Không có space sau cast: (int)value
+csharp_space_after_cast = false
+# Space sau keywords: if (), for (), while ()
+csharp_space_after_keywords_in_control_flow_statements = true
+# Không có space giữa method call và (: Method()
+csharp_space_between_method_call_parameter_list_parentheses = false
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+# Space xung quanh operators: a + b, a == b
+csharp_space_before_colon_in_inheritance_clause = true
+csharp_space_after_colon_in_inheritance_clause = true
+csharp_space_around_binary_operators = before_and_after
+# Space trong parentheses
+csharp_space_between_parentheses = false
+csharp_space_between_square_brackets = false
+
+# WRAPPING OPTIONS (Ngắt dòng)
+# Giữ statements trên một dòng
+csharp_preserve_single_line_statements = false
+# Giữ blocks trên một dòng
+csharp_preserve_single_line_blocks = true
+
+# --- CODE QUALITY RULES ---
+
+# Loại bỏ unnecessary code
+dotnet_code_quality_unused_parameters = all:warning
+dotnet_remove_unnecessary_suppression_exclusions = all:warning
+
+# Prefer simple using statements (C# 8.0+): using var stream = ...
+csharp_prefer_simple_using_statement = true:suggestion
+
+# Prefer static local functions
+csharp_prefer_static_local_function = true:suggestion
+
+# Prefer simple default expression: default thay vì default(T)
+csharp_prefer_simple_default_expression = true:suggestion
+
+# --- LANGUAGE FEATURES ---
+
+# Braces luôn luôn bắt buộc cho if, for, while (tránh bugs)
+csharp_prefer_braces = true:warning
+
+# --- ANALYZER RULES (Phát hiện lỗi tiềm ẩn) ---
+
+# CA1031: Không catch general exception types (Exception, SystemException)
+dotnet_diagnostic.CA1031.severity = none
+
+# CA1062: Validate public method arguments
+dotnet_diagnostic.CA1062.severity = suggestion
+
+# IDE0055: Fix formatting (tự động format khi save)
+dotnet_diagnostic.IDE0055.severity = warning
+
+# IDE0051: Remove unused private members
+dotnet_diagnostic.IDE0051.severity = warning
+
+# IDE0052: Remove unread private members
+dotnet_diagnostic.IDE0052.severity = warning
+
+# ==============================================
+# JSON FILES - Config cho appsettings.json
+# ==============================================
+[*.json]
+indent_style = space
+indent_size = 2
+
+# ==============================================
+# XML FILES - Config cho .csproj, .config
+# ==============================================
+[*.{xml,csproj,props,targets,config}]
+indent_style = space
+indent_size = 2
+
+# ==============================================
+# YAML FILES - Config cho docker-compose.yml, .yml
+# ==============================================
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# ==============================================
+# MARKDOWN FILES - Config cho README.md
+# ==============================================
+[*.md]
+# Markdown cần trailing spaces để line break
+trim_trailing_whitespace = false
+# 2 spaces cho nested lists
+indent_size = 2
+
+# ==============================================
+# RAZOR FILES - Config cho .cshtml, .razor
+# ==============================================
+[*.{cshtml,razor}]
+indent_style = space
+indent_size = 4
+
+# ==============================================
+# SCRIPT FILES - Config cho .ps1, .sh
+# ==============================================
+[*.{ps1,sh}]
+indent_style = space
+indent_size = 2
+
+# ==============================================
+# LƯU Ý CHO FRESHER DEVELOPERS
+# ==============================================
+# 1. Sau khi thay đổi file này, RESTART IDE để áp dụng
+# 2. Visual Studio: Tools > Options > Text Editor > C# > Code Style
+#    để xem preview các rules
+# 3. Format code: Ctrl+K, Ctrl+D (Visual Studio) hoặc Shift+Alt+F (VS Code)
+# 4. Nếu có lỗi convention, IDE sẽ gạch chân và suggest fix
+# 5. Có thể right-click > Fix all issues để tự động fix
+# 6. Khi code review, các vi phạm sẽ hiển thị => dễ phát hiện sớm
+# 7. Tham khảo: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/
