@@ -1,11 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <!-- Suppress Newtonsoft.Json vulnerability warning - không sử dụng trực tiếp, chỉ là transitive dependency -->
     <NoWarn>$(NoWarn);NU1903</NoWarn>
+
+    <!-- NuGet Package Metadata -->
+    <PackageId>CleanArchitecture.Api</PackageId>
+    <Version>10.0.1</Version>
+    <Authors>TinhLogic</Authors>
+    <Description>Clean Architecture API Layer - Contains API controllers, endpoints, and related configurations for the Clean Architecture template.</Description>
+    <PackageTags>clean-architecture;api;web;rest;controllers</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

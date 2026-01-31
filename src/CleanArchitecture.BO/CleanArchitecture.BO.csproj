@@ -13,14 +13,11 @@
     
     <!-- NuGet Package Metadata -->
     <PackageId>CleanArchitecture.BO</PackageId>
-    <Version>1.0.0</Version>
-    <Authors>Your Name</Authors>
-    <Company>Your Company</Company>
+    <Version>10.0.1</Version>
+    <Authors>TinhLogic</Authors>
     <Description>Clean Architecture Business Objects Layer - Contains business services, DTOs, and business logic interfaces with base service implementations.</Description>
     <PackageTags>clean-architecture;bo;business-objects;dto;business-logic</PackageTags>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageProjectUrl>https://github.com/yourusername/clean-architecture-template</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/yourusername/clean-architecture-template</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
