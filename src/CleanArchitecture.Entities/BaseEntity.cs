@@ -8,8 +8,8 @@ public abstract class BaseEntity
     public Guid Id { get; protected set; }
     public DateTimeOffset CreatedAt { get; protected set; }
     public DateTimeOffset? UpdatedAt { get; protected set; }
-    public string? CreatedBy { get; set; }
-    public string? UpdatedBy { get; set; }
+    public string? CreatedBy { get; protected set; }
+    public string? UpdatedBy { get; protected set; }
 
     protected BaseEntity()
     {
@@ -17,8 +17,15 @@ public abstract class BaseEntity
         CreatedAt = DateTimeOffset.UtcNow;
     }
 
-    public void SetUpdatedInfo()
+    /// <summary>
+    /// Set thông tin UpdatedAt và UpdatedBy khi entity được modify
+    /// </summary>
+    public void SetUpdatedInfo(string? updatedBy = null)
     {
         UpdatedAt = DateTimeOffset.UtcNow;
+        if (updatedBy != null)
+        {
+            UpdatedBy = updatedBy;
+        }
     }
 }

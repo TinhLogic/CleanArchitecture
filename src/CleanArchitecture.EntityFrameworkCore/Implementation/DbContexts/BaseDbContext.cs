@@ -20,18 +20,26 @@ public abstract class BaseDbContext : DbContext
             switch (entry.State)
             {
                 case EntityState.Added:
-                    // Set CreatedAt và CreatedBy khi entity mới được thêm
-                    // Note: Id và CreatedAt đã được set trong constructor
-                    // Nếu cần set CreatedBy từ current user, có thể inject IHttpContextAccessor
+                    // Hook method cho derived class override để set CreatedBy từ current user
+                    SetCreatedAuditFields(entry.Entity);
                     break;
 
                 case EntityState.Modified:
-                    // Auto update UpdatedAt khi entity được modify
-                    entry.Entity.SetUpdatedInfo();
+                    // Hook method cho derived class override để set UpdatedBy từ current user
+                    SetModifiedAuditFields(entry.Entity);
                     break;
             }
         }
 
         return base.SaveChangesAsync(cancellationToken);
+    }
+
+    protected virtual void SetCreatedAuditFields(BaseEntity entity)
+    {
+    }
+
+    protected virtual void SetModifiedAuditFields(BaseEntity entity)
+    {
+        entity.SetUpdatedInfo();
     }
 }
