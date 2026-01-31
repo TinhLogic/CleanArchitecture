@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DevExtreme.AspNet.Data" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CleanArchitecture.EntityFrameworkCore\CleanArchitecture.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.BO\CleanArchitecture.BO.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.DTOs\CleanArchitecture.DTOs.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.Entities\CleanArchitecture.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

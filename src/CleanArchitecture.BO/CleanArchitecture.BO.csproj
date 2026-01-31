@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\CleanArchitecture.EntityFrameworkCore\CleanArchitecture.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.DTOs\CleanArchitecture.DTOs.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.Entities\CleanArchitecture.Entities.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- NuGet Package Metadata -->
+    <PackageId>CleanArchitecture.BO</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Your Name</Authors>
+    <Company>Your Company</Company>
+    <Description>Clean Architecture Business Objects Layer - Contains business services, DTOs, and business logic interfaces with base service implementations.</Description>
+    <PackageTags>clean-architecture;bo;business-objects;dto;business-logic</PackageTags>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/yourusername/clean-architecture-template</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/yourusername/clean-architecture-template</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+</Project>
