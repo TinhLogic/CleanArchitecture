@@ -1,0 +1,40 @@
+# Global Analyzer Configuration
+# Tài liệu: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/configuration-files
+
+is_global = true
+
+# ==============================================
+# BLANK LINES - Dòng trống giữa các members
+# ==============================================
+
+# SA1516: Elements should be separated by blank line
+# Yêu cầu có dòng trống giữa các members (methods, properties, fields, classes)
+dotnet_diagnostic.SA1516.severity = warning
+
+# SA1507: Code should not contain multiple blank lines in a row
+# Không cho phép nhiều dòng trống liên tiếp
+dotnet_diagnostic.SA1507.severity = warning
+
+# SA1508: Closing braces should not be preceded by blank line
+# Dấu } đóng không nên có dòng trống phía trước
+dotnet_diagnostic.SA1508.severity = warning
+
+# SA1509: Opening braces should not be preceded by blank line
+# Dấu { mở không nên có dòng trống phía trước (trừ khi cần thiết)
+dotnet_diagnostic.SA1509.severity = none
+
+# SA1513: Closing brace should be followed by blank line
+# Dấu } đóng nên có dòng trống phía sau (trừ else, catch, finally)
+dotnet_diagnostic.SA1513.severity = warning
+
+# ==============================================
+# ADDITIONAL SPACING RULES
+# ==============================================
+
+# SA1028: Code should not contain trailing whitespace
+# Không có khoảng trắng thừa ở cuối dòng
+dotnet_diagnostic.SA1028.severity = warning
+
+# SA1027: Tabs should not be used
+# Không dùng tab, chỉ dùng spaces
+dotnet_diagnostic.SA1027.severity = warning

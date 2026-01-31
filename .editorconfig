@@ -177,6 +177,12 @@ dotnet_style_null_propagation = true:suggestion
 
 # --- FORMATTING RULES (Quy tắc format) ---
 
+# BLANK LINES (Dòng trống)
+# Luôn có 1 dòng trống giữa các members (methods, properties, fields)
+# Giúp code dễ đọc và tách biệt rõ ràng từng phần
+dotnet_style_allow_multiple_blank_lines_experimental = false:warning
+dotnet_style_allow_statement_immediately_after_block_experimental = false:warning
+
 # NEW LINE OPTIONS (Xuống dòng)
 # Mở { trên dòng mới (Allman style - chuẩn C#)
 csharp_new_line_before_open_brace = all
